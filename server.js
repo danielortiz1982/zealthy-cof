@@ -7,7 +7,7 @@ const app = express();
 const PORT = 80;
 const message = `Server is running on port ${PORT}`;
 app.use(express.json());
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/public/build/`));
 app.use(UserRouter);
 app.use(FormComponentRouter);
 app.use(FormFlowRouter);

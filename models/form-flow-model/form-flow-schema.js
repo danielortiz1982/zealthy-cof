@@ -9,6 +9,9 @@ const FormFlowSchema = new Schema({
   heading: {
     type: String,
   },
+  el: {
+    type: [],
+  },
 });
 
 module.exports = FormFlowSchema;

@@ -33,4 +33,17 @@ UserRouter.delete("/data/v1/user/delete/:id", async (request, response) => {
   response.status(201).send(user).end();
 });
 
+UserRouter.put("/data/v1/user/update/:id", async (request, response) => {
+  const _id = request.params.id;
+  try {
+    const user = await UserModel.findByIdAndUpdate(_id, request.body, {
+      new: true,
+      runValidators: true,
+    });
+    response.status(201).send(user).end();
+  } catch (e) {
+    response.status(400).send(e).end();
+  }
+});
+
 module.exports = UserRouter;

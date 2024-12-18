@@ -12,4 +12,12 @@ app.use(UserRouter);
 app.use(FormComponentRouter);
 app.use(FormFlowRouter);
 app.get("/", (req, res) => res.sendFile("index.html"));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from http://192.168.1.152:3000
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.listen(PORT, console.log(message));

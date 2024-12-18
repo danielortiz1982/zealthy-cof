@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+const sample = async () => {
+  const fetchData = await fetch("http://209.97.154.37/data/v1/users", {
+    mode: "no-cors",
+  });
+  const data = await fetchData.json();
+  console.log(data);
+};
+
+sample();
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{"Zealth Customer Onboarding Flow"}</h1>
     </div>
   );
 }

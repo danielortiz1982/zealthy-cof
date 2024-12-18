@@ -6,12 +6,7 @@ const FormFlowRouter = require("./router/form-flow-router/form-flow-router");
 const app = express();
 const PORT = 80;
 const message = `Server is running on port ${PORT}`;
-app.use(express.json());
-app.use(express.static(`${__dirname}/public/build/`));
-app.use(UserRouter);
-app.use(FormComponentRouter);
-app.use(FormFlowRouter);
-app.get("/", (req, res) => res.sendFile("index.html"));
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from http://192.168.1.152:3000
   res.header(
@@ -20,4 +15,11 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+app.use(express.json());
+app.use(express.static(`${__dirname}/public/build/`));
+app.use(UserRouter);
+app.use(FormComponentRouter);
+app.use(FormFlowRouter);
+app.get("/", (req, res) => res.sendFile("index.html"));
 app.listen(PORT, console.log(message));

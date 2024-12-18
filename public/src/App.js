@@ -1,9 +1,7 @@
 import "./App.css";
 
 const sample = async () => {
-  const fetchData = await fetch("http://209.97.154.37/data/v1/users", {
-    mode: "no-cors",
-  });
+  const fetchData = await fetch("http://localhost/data/v1/users");
   const data = await fetchData.json();
   console.log(data);
 };

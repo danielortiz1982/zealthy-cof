@@ -33,7 +33,21 @@ function App() {
     return flows;
   };
 
+  const initFlowState = {};
+
   const f = flowArray()[counter];
+
+  const handlePrevious = () => {
+    if (counter > 0) {
+      setCounter(counter - 1);
+    }
+  };
+
+  const hanldeNext = () => {
+    setCounter(counter + 1);
+  };
+
+  const hanldeSubmit = () => {};
 
   return (
     <div className="App">
@@ -53,8 +67,12 @@ function App() {
           </div>
 
           <div className="button-container">
-            <button onClick={(e) => setCounter(counter - 1)}>Previous</button>
-            <button onClick={(e) => setCounter(counter + 1)}>Next</button>
+            {counter > 0 && (
+              <button onClick={() => handlePrevious()}>Previous</button>
+            )}
+            {<button onClick={() => hanldeNext()}>Next</button>}
+
+            {<button onClick={() => hanldeSubmit()}>Submit</button>}
           </div>
         </div>
       )}

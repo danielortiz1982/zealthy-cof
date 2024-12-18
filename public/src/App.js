@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [flows, setFlows] = useState([]);
   const [components, setComponents] = useState([]);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     const getFormFlows = async (url) => {
@@ -24,7 +25,7 @@ function App() {
     getFormComponents("http://209.97.154.37/data/v1/form-components");
   }, []);
 
-  const formElements = () => {
+  const flowArray = () => {
     flows.forEach((f) => {
       const c = components.filter((c) => f.el.includes(c._id));
       f.formEl = c;
@@ -32,31 +33,31 @@ function App() {
     return flows;
   };
 
-  console.log(formElements());
+  const f = flowArray()[counter];
 
   return (
     <div className="App">
       <h1>{"Zealth Customer Onboarding Flow"}</h1>
 
-      <div className="sample">
-        {formElements().map((element) => {
-          return (
-            <div key={element._id}>
-              <h1>{element.heading}</h1>
-              {element.formEl.map((form) => {
-                return (
-                  <div key={form._id}>
-                    <input
-                      className={form.name}
-                      onChange={(e) => console.log(e.target.value)}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+      {f === undefined ? (
+        "loading"
+      ) : (
+        <div className="user-flow">
+          <h1>{f.heading}</h1>
+          <div className="form-elements">
+            {f.formEl.map((el) => (
+              <div className={el.name} key={el._id}>
+                <input />
+              </div>
+            ))}
+          </div>
+
+          <div className="button-container">
+            <button onClick={(e) => setCounter(counter - 1)}>Previous</button>
+            <button onClick={(e) => setCounter(counter + 1)}>Next</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

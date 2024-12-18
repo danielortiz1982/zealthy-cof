@@ -33,8 +33,6 @@ function App() {
     return flows;
   };
 
-  const initFlowState = {};
-
   const f = flowArray()[counter];
 
   const handlePrevious = () => {
@@ -61,7 +59,13 @@ function App() {
           <div className="form-elements">
             {f.formEl.map((el) => (
               <div className={el.name} key={el._id}>
-                <input />
+                <label htmlFor={el.name}>{el.label}</label>
+                <input
+                  type={el.htmlType}
+                  id={el.htmlID}
+                  name={el.name}
+                  onChange={(e) => console.log(e.target.value)}
+                />
               </div>
             ))}
           </div>
@@ -72,7 +76,7 @@ function App() {
             )}
             {<button onClick={() => hanldeNext()}>Next</button>}
 
-            {<button onClick={() => hanldeSubmit()}>Submit</button>}
+            {/* {<button onClick={() => hanldeSubmit()}>Submit</button>} */}
           </div>
         </div>
       )}

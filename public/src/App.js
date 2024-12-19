@@ -47,6 +47,7 @@ function App() {
       }));
       setCounter((current) => current - 1);
     }
+    console.log(flows[counter].formEl);
   };
 
   const hanldeNext = () => {
@@ -54,12 +55,21 @@ function App() {
       setUser((pre) => ({ ...pre, details: [...user.details, ...f.formEl] }));
       setCounter((current) => current + 1);
     }
+    console.log(flows[counter].formEl);
+  };
+
+  const handleOnchange = (e) => {
+    const formId = e.target.getAttribute("data-form");
+    const updateFormState = f.formEl.map((el) => {
+      const updateValue = { ...el, value: e.target.value };
+      return el._id === formId ? updateValue : el;
+    });
+
+    flows[counter].formEl = updateFormState;
   };
 
   console.log(user);
-  // const sample = user.details.filter(
-  //   (e) => e._id === "676346aec4de37cf8d12862a"
-  // );
+
   const hanldeSubmit = () => {};
 
   return (
@@ -76,10 +86,11 @@ function App() {
               <div className={`${el.name} form-element`} key={el._id}>
                 <label htmlFor={el.name}>{el.label}</label>
                 <input
+                  data-form={el._id}
                   type={el.htmlType}
                   id={el.htmlID}
                   name={el.name}
-                  onChange={(e) => console.log(e.target.value)}
+                  onChange={(e) => handleOnchange(e)}
                 />
               </div>
             ))}

@@ -60,7 +60,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{"Zealth Customer Onboarding Flow"}</h1>
+      <h1 className="header-banner">{"Zealth Customer Onboarding Flow"}</h1>
 
       {f === undefined ? (
         "loading"

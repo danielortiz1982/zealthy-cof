@@ -4,6 +4,12 @@ import "./App.css";
 function App() {
   const [flows, setFlows] = useState([]);
   const [components, setComponents] = useState([]);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    details: {},
+    role: "user",
+  });
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
@@ -30,6 +36,9 @@ function App() {
       const c = components.filter((c) => f.el.includes(c._id));
       f.formEl = c;
     });
+
+    // flows.forEach((f) => {});
+    // console.log(flows);
     return flows;
   };
 
@@ -42,7 +51,9 @@ function App() {
   };
 
   const hanldeNext = () => {
-    setCounter(counter + 1);
+    if (counter < flows.length - 1 || counter !== flows.length - 1) {
+      setCounter(counter + 1);
+    }
   };
 
   const hanldeSubmit = () => {};
@@ -74,9 +85,15 @@ function App() {
             {counter > 0 && (
               <button onClick={() => handlePrevious()}>Previous</button>
             )}
-            {<button onClick={() => hanldeNext()}>Next</button>}
+            {counter > flows.length - 1 ||
+              (counter !== flows.length - 1 && (
+                <button onClick={() => hanldeNext()}>Next</button>
+              ))}
 
-            {/* {<button onClick={() => hanldeSubmit()}>Submit</button>} */}
+            {counter < flows.length - 1 ||
+              (counter === flows.length - 1 && (
+                <button onClick={() => hanldeSubmit()}>Submit</button>
+              ))}
           </div>
         </div>
       )}

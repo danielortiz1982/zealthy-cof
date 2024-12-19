@@ -4,12 +4,7 @@ import "./App.css";
 function App() {
   const [flows, setFlows] = useState([]);
   const [components, setComponents] = useState([]);
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    details: {},
-    role: "user",
-  });
+  const [user, setUser] = useState({ role: "user", details: [] });
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
@@ -36,9 +31,6 @@ function App() {
       const c = components.filter((c) => f.el.includes(c._id));
       f.formEl = c;
     });
-
-    // flows.forEach((f) => {});
-    // console.log(flows);
     return flows;
   };
 
@@ -46,16 +38,28 @@ function App() {
 
   const handlePrevious = () => {
     if (counter > 0) {
-      setCounter(counter - 1);
+      const data = user.details;
+      const elCount = flows[counter - 1].el.length;
+      const updateFormState = data.slice(elCount);
+      setUser((pre) => ({
+        ...pre,
+        details: [...updateFormState],
+      }));
+      setCounter((current) => current - 1);
     }
   };
 
   const hanldeNext = () => {
     if (counter < flows.length - 1 || counter !== flows.length - 1) {
-      setCounter(counter + 1);
+      setUser((pre) => ({ ...pre, details: [...user.details, ...f.formEl] }));
+      setCounter((current) => current + 1);
     }
   };
 
+  console.log(user);
+  // const sample = user.details.filter(
+  //   (e) => e._id === "676346aec4de37cf8d12862a"
+  // );
   const hanldeSubmit = () => {};
 
   return (

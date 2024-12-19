@@ -69,7 +69,7 @@ function App() {
           <h1>{f.heading}</h1>
           <div className="form-elements">
             {f.formEl.map((el) => (
-              <div className={el.name} key={el._id}>
+              <div className={`${el.name} form-element`} key={el._id}>
                 <label htmlFor={el.name}>{el.label}</label>
                 <input
                   type={el.htmlType}
@@ -79,21 +79,35 @@ function App() {
                 />
               </div>
             ))}
+
+            <div className="step-counter">
+              Steps: {counter + 1} of {flows.length}
+            </div>
           </div>
 
           <div className="button-container">
-            {counter > 0 && (
-              <button onClick={() => handlePrevious()}>Previous</button>
-            )}
-            {counter > flows.length - 1 ||
-              (counter !== flows.length - 1 && (
-                <button onClick={() => hanldeNext()}>Next</button>
-              ))}
+            <div className="left">
+              {counter > 0 && (
+                <button onClick={() => handlePrevious()}>Previous</button>
+              )}
+            </div>
 
-            {counter < flows.length - 1 ||
-              (counter === flows.length - 1 && (
-                <button onClick={() => hanldeSubmit()}>Submit</button>
-              ))}
+            <div className="right">
+              {counter > flows.length - 1 ||
+                (counter !== flows.length - 1 && (
+                  <button onClick={() => hanldeNext()}>Next</button>
+                ))}
+
+              {counter < flows.length - 1 ||
+                (counter === flows.length - 1 && (
+                  <button
+                    className="submit-button"
+                    onClick={() => hanldeSubmit()}
+                  >
+                    Submit
+                  </button>
+                ))}
+            </div>
           </div>
         </div>
       )}

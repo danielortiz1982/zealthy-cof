@@ -70,6 +70,24 @@ const FlowBuilder = () => {
     const data = await fetchData.json();
   };
 
+  const handleUpdate = (e) => {
+    // console.log(e);
+  };
+
+  const handleEdit = async (e) => {
+    console.log(e);
+
+    const getFormElements = async (url) => {
+      const fetchData = await fetch(url);
+      const data = await fetchData.json();
+      setName(data.name);
+      setHeading(data.heading);
+      const formList = formElements.filter((e) => data.el.includes(e._id));
+      setDisplayEl(formList);
+    };
+    getFormElements(`http://209.97.154.37/data/v1/form-flow/${e.target.id}`);
+  };
+
   return (
     <div className="flow-section">
       <div className="section-left">
@@ -142,6 +160,13 @@ const FlowBuilder = () => {
             return (
               <div className="flow" key={flow._id}>
                 <p>{flow.name}</p>{" "}
+                <button
+                  className="edit"
+                  id={flow._id}
+                  onClick={(e) => handleEdit(e)}
+                >
+                  Edit
+                </button>
                 <button id={flow._id} onClick={(e) => handleDelete(e)}>
                   X
                 </button>

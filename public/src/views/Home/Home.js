@@ -1,5 +1,6 @@
 import Header from "../../components/Header/Header";
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
@@ -72,7 +73,7 @@ const Home = () => {
 
   const hanldeSubmit = () => {
     updateUser();
-    window.location.href = "/admin";
+    return <Navigate to={`/users`} />;
   };
 
   const postUser = async () => {

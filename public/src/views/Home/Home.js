@@ -6,8 +6,8 @@ const Home = () => {
   const [flows, setFlows] = useState([]);
   const [components, setComponents] = useState([]);
   const [user, setUser] = useState({ role: "user", details: [] });
+  const [responseState, setResponseState] = useState({});
   const [counter, setCounter] = useState(0);
-  const [serverState, setServerState] = useState({});
 
   useEffect(() => {
     const getFormFlows = async (url) => {
@@ -52,11 +52,6 @@ const Home = () => {
   };
 
   const hanldeNext = () => {
-    if (Object.keys(serverState).length === 0) {
-      alert("Email and Password are required to move to step 2");
-      return;
-    }
-
     if (counter < flows.length - 1 || counter !== flows.length - 1) {
       setUser((pre) => ({ ...pre, details: [...user.details, ...f.formEl] }));
       setCounter((current) => current + 1);
@@ -65,23 +60,20 @@ const Home = () => {
     if (counter === 0) {
       postUser();
     } else {
-      // console.log(serverState._id);
       updateUser();
     }
   };
 
   const handleOnchange = (e) => {
+    console.log(responseState._id);
     const formId = e.target.getAttribute("data-form");
     const updateFormState = f.formEl.map((el) => {
       const updateValue = { ...el, value: e.target.value };
-      setServerState(updateValue);
       return el._id === formId ? updateValue : el;
     });
 
     flows[counter].formEl = updateFormState;
   };
-
-  // console.log(user);
 
   const hanldeSubmit = () => {};
 
@@ -91,10 +83,12 @@ const Home = () => {
 
     const response = await fetch("http://209.97.154.37/data/v1/user/new", {
       method: "POST",
-      body: JSON.stringify(user),
+      body: JSON.stringify({ ...user, details: flows[counter].formEl }),
       headers: myHeaders,
     });
-    console.log(response);
+
+    const data = await response.json();
+    setResponseState(data);
   };
 
   const updateUser = async () => {
@@ -102,15 +96,17 @@ const Home = () => {
     myHeaders.append("Content-Type", "application/json");
 
     const response = await fetch(
-      `http://209.97.154.37/data/v1/user/update/${serverState._id}`,
+      `http://209.97.154.37/data/v1/user/update/${responseState._id}`,
       {
         method: "PUT",
-        body: JSON.stringify(user),
+        body: JSON.stringify({ ...user, details: flows[counter].formEl }),
         headers: myHeaders,
       }
     );
 
-    console.log(user);
+    const data = await response.json();
+
+    console.log(data);
   };
 
   return (

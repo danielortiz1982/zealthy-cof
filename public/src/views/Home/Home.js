@@ -1,6 +1,6 @@
 import Header from "../../components/Header/Header";
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
@@ -9,6 +9,8 @@ const Home = () => {
   const [user, setUser] = useState({ role: "user", details: [] });
   const [responseState, setResponseState] = useState({});
   const [counter, setCounter] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getFormFlows = async (url) => {
@@ -73,7 +75,7 @@ const Home = () => {
 
   const hanldeSubmit = () => {
     updateUser();
-    return <Navigate to={`/users`} />;
+    navigate("/users");
   };
 
   const postUser = async () => {

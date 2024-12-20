@@ -59,6 +59,20 @@ const FlowBuilder = () => {
     setDisplayEl([]);
   };
 
+  const handleDelete = async (e) => {
+    console.log(e.target.id);
+
+    const fetchData = await fetch(
+      `http://209.97.154.37/data/v1/form-flow/delete/${e.target.id}`,
+      { method: "DELETE" }
+    );
+    const data = await fetchData.json();
+
+    // const updateFormFlow =
+
+    console.log(data);
+  };
+
   return (
     <div className="flow-section">
       <div className="section-left">
@@ -130,7 +144,10 @@ const FlowBuilder = () => {
           {formFlows.map((flow) => {
             return (
               <div className="flow" key={flow._id}>
-                <p>{flow.name}</p>
+                <p>{flow.name}</p>{" "}
+                <button id={flow._id} onClick={(e) => handleDelete(e)}>
+                  X
+                </button>
               </div>
             );
           })}

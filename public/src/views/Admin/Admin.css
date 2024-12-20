@@ -1,0 +1,44 @@
+.Admin,
+.admin-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-components {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-el-left {
+  width: 40%;
+}
+
+.form-el-right {
+  width: 55%;
+}
+
+.el-display {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+.el-item {
+  width: 100%;
+  display: flex;
+  text-align: left;
+  padding: 10px;
+  margin: 5px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}

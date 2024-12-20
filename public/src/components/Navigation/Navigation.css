@@ -1,0 +1,12 @@
+nav {
+  border-bottom: solid 1px #ccc;
+  padding-bottom: 25px;
+}
+nav a {
+  color: red;
+  font-weight: bold;
+  padding: 10px 25px;
+}
+nav a:hover {
+  background-color: black;
+}

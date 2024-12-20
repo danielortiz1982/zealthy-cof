@@ -70,7 +70,10 @@ const Home = () => {
     flows[counter].formEl = updateFormState;
   };
 
-  const hanldeSubmit = () => {};
+  const hanldeSubmit = () => {
+    updateUser();
+    window.location.href = "/admin";
+  };
 
   const postUser = async () => {
     const myHeaders = new Headers();

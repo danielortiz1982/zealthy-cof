@@ -1,0 +1,41 @@
+.add-button {
+  margin-left: 5px;
+  padding: 13px 10px;
+  background-color: #333;
+  border: 0;
+  color: #f1f1f1;
+  cursor: pointer;
+}
+
+.fc-select {
+  padding: 2px 5px;
+  background-color: #f1f1f1;
+  border: solid 10px #f1f1f1;
+  color: #333;
+  cursor: pointer;
+}
+
+.display-fc {
+  width: 100%;
+  display: flex;
+  padding: 15px 0;
+  flex-direction: column;
+}
+.fc-item {
+  margin: 5px 0;
+  padding: 10px 20px;
+  text-align: left;
+  background-color: #f1f1f1;
+  border: solid 1px #cccccc;
+}
+
+.flow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: #f1f1f1;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}

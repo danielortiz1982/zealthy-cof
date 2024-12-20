@@ -41,7 +41,9 @@ const Admin = () => {
     );
 
     const data = await response.json();
-    console.log(data);
+    const d = [...formElements, data];
+    setFormElements(d);
+    console.log(d);
   };
 
   return (

@@ -21,5 +21,5 @@ app.use(express.static(`${__dirname}/public/build/`));
 app.use(UserRouter);
 app.use(FormComponentRouter);
 app.use(FormFlowRouter);
-app.get("/", (req, res) => res.sendFile("index.html"));
+app.get("*", (req, res) => res.sendFile("index.html"));
 app.listen(PORT, console.log(message));

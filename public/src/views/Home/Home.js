@@ -101,7 +101,7 @@ const Home = () => {
         method: "PUT",
         body: JSON.stringify({
           ...user,
-          details: [...responseState.details, flows[counter].formEl],
+          details: [...responseState.details, ...flows[counter].formEl],
         }),
         headers: myHeaders,
       }

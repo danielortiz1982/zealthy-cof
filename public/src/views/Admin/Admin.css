@@ -63,3 +63,17 @@ hr {
   color: #333;
   cursor: pointer;
 }
+
+.display-fc {
+  width: 100%;
+  display: flex;
+  padding: 15px 0;
+  flex-direction: column;
+}
+.fc-item {
+  margin: 5px 0;
+  padding: 10px 20px;
+  text-align: left;
+  background-color: #f1f1f1;
+  border: solid 1px #cccccc;
+}

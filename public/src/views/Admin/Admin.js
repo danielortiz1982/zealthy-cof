@@ -25,9 +25,31 @@ const Admin = () => {
       alert("Please select a form component");
     } else {
       const elements = [...flowEl, select];
-
+      const displyFilter = formElements.filter((item) => item._id === select);
+      const display = [...displayEl, ...displyFilter];
       setFlowEl(elements);
+      setDisplayEl(display);
     }
+  };
+
+  const handleSubmit = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch("http://209.97.154.37/data/v1/form-flow/new", {
+      method: "POST",
+      body: JSON.stringify({ name, heading, el: flowEl }),
+      headers: myHeaders,
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
+    setName("");
+    setHeading("");
+    setFlowEl([]);
+    setDisplayEl([]);
   };
 
   return (
@@ -81,6 +103,23 @@ const Admin = () => {
                 <button className="add-button" onClick={() => addFormEl()}>
                   Add Element
                 </button>
+              </div>
+
+              <div className="flow-el">
+                <p style={{ padding: "0" }}>Form Elements:</p>
+                <div className="display-fc">
+                  {displayEl.map((el) => {
+                    return (
+                      <div className="fc-item" key={el._id}>
+                        {el.name} <button>X</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flow-el">
+                <button onClick={() => handleSubmit()}>Create Flow</button>
               </div>
 
               {/* end */}

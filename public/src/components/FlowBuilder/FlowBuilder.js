@@ -60,17 +60,14 @@ const FlowBuilder = () => {
   };
 
   const handleDelete = async (e) => {
-    console.log(e.target.id);
+    const updateDateted = formFlows.filter((el) => el._id !== e.target.id);
+    setFormFlows(updateDateted);
 
     const fetchData = await fetch(
       `http://209.97.154.37/data/v1/form-flow/delete/${e.target.id}`,
       { method: "DELETE" }
     );
     const data = await fetchData.json();
-
-    // const updateFormFlow =
-
-    console.log(data);
   };
 
   return (

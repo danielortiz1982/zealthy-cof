@@ -46,6 +46,17 @@ const Admin = () => {
     console.log(d);
   };
 
+  const handleDelete = async (e) => {
+    const fetchData = await fetch(
+      `http://209.97.154.37/data/v1/form-component/delete/${e.target.id}`,
+      { method: "DELETE" }
+    );
+    const data = await fetchData.json();
+
+    // setFormElements(d);
+    console.log(data);
+  };
+
   return (
     <div className="Admin">
       <Header />
@@ -103,7 +114,10 @@ const Admin = () => {
             <div className="el-display">
               {formElements.map((e) => (
                 <div className="el-item" key={e._id}>
-                  {e.name}
+                  {e.name}{" "}
+                  <button id={e._id} onClick={(e) => handleDelete(e)}>
+                    X
+                  </button>
                 </div>
               ))}
             </div>

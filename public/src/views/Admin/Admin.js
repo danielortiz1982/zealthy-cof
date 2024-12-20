@@ -1,15 +1,9 @@
-import { set } from "mongoose";
-import Header from "../../components/Header/Header";
-import "./Admin.css";
 import { useEffect, useState } from "react";
+import Header from "../../components/Header/Header";
+import FormComponents from "../../components/FormComponents/FormComponents";
+import "./Admin.css";
 
 const Admin = () => {
-  const [name, setName] = useState("");
-  const [htmlID, setHtmlId] = useState("");
-  const [htmlType, setType] = useState("");
-  const [label, setLabel] = useState("");
-  const [formElements, setFormElements] = useState([]);
-
   useEffect(() => {
     const getFormElements = async (url) => {
       const fetchData = await fetch(url);
@@ -19,42 +13,21 @@ const Admin = () => {
     getFormElements("http://209.97.154.37/data/v1/form-components");
   }, []);
 
-  const handleSubmit = () => {
-    postFormComponent();
-    setName("");
-    setHtmlId("");
-    setType("");
-    setLabel("");
-  };
+  const [name, setName] = useState();
+  const [heading, setHeading] = useState("");
+  const [formElements, setFormElements] = useState([]);
+  const [select, setSelect] = useState("");
+  const [flowEl, setFlowEl] = useState([]);
+  const [displayEl, setDisplayEl] = useState([]);
 
-  const postFormComponent = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+  const addFormEl = () => {
+    if (select === "" || select === "Select") {
+      alert("Please select a form component");
+    } else {
+      const elements = [...flowEl, select];
 
-    const response = await fetch(
-      "http://209.97.154.37/data/v1/form-component/new",
-      {
-        method: "POST",
-        body: JSON.stringify({ name, htmlID, htmlType, label }),
-        headers: myHeaders,
-      }
-    );
-
-    const data = await response.json();
-    const d = [...formElements, data];
-    setFormElements(d);
-    console.log(d);
-  };
-
-  const handleDelete = async (e) => {
-    const fetchData = await fetch(
-      `http://209.97.154.37/data/v1/form-component/delete/${e.target.id}`,
-      { method: "DELETE" }
-    );
-    const data = await fetchData.json();
-
-    // setFormElements(d);
-    console.log(data);
+      setFlowEl(elements);
+    }
   };
 
   return (
@@ -63,65 +36,59 @@ const Admin = () => {
       <h1>Admin</h1>
 
       <div className="admin-content">
-        <div className="form-components">
-          <div className="form-el-left">
-            <h2>Create Form Element</h2>
-            <div className="form-el-builder form-elements">
-              <div className="name-el">
+        <FormComponents />
+        <hr />
+
+        <div className="flow-section">
+          <div className="section-left">
+            <h2>Create User Flow</h2>
+            <div className="flow-form form-elements">
+              <div className="flow-el">
                 <label htmlFor="name">Name:</label>
                 <input
                   name="name"
-                  onChange={(e) => setName(e.target.value)}
                   value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
 
-              <div className="name-el">
-                <label htmlFor="htmlID">ID:</label>
+              <div className="flow-el">
+                <label htmlFor="heading">Heading:</label>
                 <input
-                  name="htmlID"
-                  onChange={(e) => setHtmlId(e.target.value)}
-                  value={htmlID}
+                  name="heading"
+                  value={heading}
+                  onChange={(e) => setHeading(e.target.value)}
                 />
               </div>
 
-              <div className="name-el">
-                <label htmlFor="htmlType">Input Type:</label>
-                <input
-                  name="htmlType"
-                  onChange={(e) => setType(e.target.value)}
-                  value={htmlType}
-                />
+              <div className="flow-el">
+                <label htmlFor="select">Form Component:</label>
+                <select
+                  className="fc-select"
+                  name="select"
+                  value={select}
+                  onChange={(e) => setSelect(e.target.value)}
+                >
+                  <option>Select</option>
+                  {formElements.map((el) => {
+                    return (
+                      <option key={el._id} value={el._id}>
+                        {el.label}
+                      </option>
+                    );
+                  })}
+                </select>
+                <button className="add-button" onClick={() => addFormEl()}>
+                  Add Element
+                </button>
               </div>
 
-              <div className="name-el">
-                <label htmlFor="label">Label:</label>
-                <input
-                  name="label"
-                  onChange={(e) => setLabel(e.target.value)}
-                  value={label}
-                />
-              </div>
-
-              <div className="button-container">
-                <button onClick={() => handleSubmit()}>Create Input</button>
-              </div>
               {/* end */}
             </div>
+            <div style={{ height: "500px" }}></div>
           </div>
 
-          <div className="form-el-right">
-            <div className="el-display">
-              {formElements.map((e) => (
-                <div className="el-item" key={e._id}>
-                  {e.name}{" "}
-                  <button id={e._id} onClick={(e) => handleDelete(e)}>
-                    X
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className="section-right">right</div>
         </div>
       </div>
     </div>

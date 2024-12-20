@@ -1,0 +1,16 @@
+.form-components {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-el-left {
+  width: 40%;
+}
+
+.form-el-right {
+  width: 55%;
+}

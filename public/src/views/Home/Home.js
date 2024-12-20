@@ -65,7 +65,7 @@ const Home = () => {
   };
 
   const handleOnchange = (e) => {
-    console.log(responseState);
+    console.log(responseState._id);
     const formId = e.target.getAttribute("data-form");
     const updateFormState = f.formEl.map((el) => {
       const updateValue = { ...el, value: e.target.value };
@@ -83,10 +83,7 @@ const Home = () => {
 
     const response = await fetch("http://209.97.154.37/data/v1/user/new", {
       method: "POST",
-      body: JSON.stringify({
-        ...user,
-        details: [...responseState.details, ...flows[counter].formEl],
-      }),
+      body: JSON.stringify({ ...user, details: [flows[counter].formEl] }),
       headers: myHeaders,
     });
 
@@ -102,7 +99,10 @@ const Home = () => {
       `http://209.97.154.37/data/v1/user/update/${responseState._id}`,
       {
         method: "PUT",
-        body: JSON.stringify({ ...user, details: flows[counter].formEl }),
+        body: JSON.stringify({
+          ...user,
+          details: [...responseState.details, flows[counter].formEl],
+        }),
         headers: myHeaders,
       }
     );

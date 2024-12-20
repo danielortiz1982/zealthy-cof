@@ -57,15 +57,10 @@ const Home = () => {
       setCounter((current) => current + 1);
     }
 
-    if (counter === 0) {
-      postUser();
-    } else {
-      updateUser();
-    }
+    counter === 0 ? postUser() : updateUser();
   };
 
   const handleOnchange = (e) => {
-    console.log(responseState._id);
     const formId = e.target.getAttribute("data-form");
     const updateFormState = f.formEl.map((el) => {
       const updateValue = { ...el, value: e.target.value };
@@ -108,8 +103,7 @@ const Home = () => {
     );
 
     const data = await response.json();
-
-    console.log(data);
+    setResponseState(data);
   };
 
   return (

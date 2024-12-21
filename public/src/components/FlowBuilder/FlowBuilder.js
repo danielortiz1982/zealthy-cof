@@ -25,6 +25,8 @@ const FlowBuilder = () => {
   const [displayEl, setDisplayEl] = useState([]);
   const [formFlows, setFormFlows] = useState([]);
 
+  const [editToggle, setEditToggle] = useState(false);
+
   const addFormEl = () => {
     if (select === "" || select === "Select") {
       alert("Please select a form component");
@@ -70,22 +72,48 @@ const FlowBuilder = () => {
     const data = await fetchData.json();
   };
 
-  const handleUpdate = (e) => {
-    // console.log(e);
+  const handleUpdate = async (e) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const response = await fetch(
+      `http://209.97.154.37/data/v1/user/update/lll`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ name, heading, el: flowEl }),
+        headers: myHeaders,
+      }
+    );
+    const data = await response.json();
+
+    setName("");
+    setHeading("");
+    setFlowEl([]);
+    setDisplayEl([]);
+    setEditToggle(false);
   };
 
   const handleEdit = async (e) => {
-    console.log(e);
-
     const getFormElements = async (url) => {
+      setEditToggle(true);
       const fetchData = await fetch(url);
       const data = await fetchData.json();
       setName(data.name);
       setHeading(data.heading);
+      setFlowEl(data.el);
       const formList = formElements.filter((e) => data.el.includes(e._id));
       setDisplayEl(formList);
     };
     getFormElements(`http://209.97.154.37/data/v1/form-flow/${e.target.id}`);
+  };
+
+  const handleRemoveButton = (e) => {
+    const removeFlowEl = flowEl.filter((el) => el !== e.target.id);
+    setFlowEl(removeFlowEl);
+
+    const removedFormEl = formElements.filter((el) =>
+      removeFlowEl.includes(el._id)
+    );
+    setDisplayEl(removedFormEl);
   };
 
   return (
@@ -139,7 +167,10 @@ const FlowBuilder = () => {
               {displayEl.map((el) => {
                 return (
                   <div className="fc-item" key={el._id}>
-                    {el.name} <button>X</button>
+                    {el.name}{" "}
+                    <button id={el._id} onClick={(e) => handleRemoveButton(e)}>
+                      X
+                    </button>
                   </div>
                 );
               })}
@@ -147,7 +178,11 @@ const FlowBuilder = () => {
           </div>
 
           <div className="flow-el">
-            <button onClick={() => handleSubmit()}>Create Flow</button>
+            {editToggle ? (
+              <button onClick={(e) => handleUpdate(e)}>Update Flow</button>
+            ) : (
+              <button onClick={() => handleSubmit()}>Create Flow</button>
+            )}
           </div>
 
           {/* end */}

@@ -24,6 +24,7 @@ const FlowBuilder = () => {
   const [flowEl, setFlowEl] = useState([]);
   const [displayEl, setDisplayEl] = useState([]);
   const [formFlows, setFormFlows] = useState([]);
+  const [flowID, setFlowId] = useState("");
 
   const [editToggle, setEditToggle] = useState(false);
 
@@ -76,7 +77,7 @@ const FlowBuilder = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const response = await fetch(
-      `http://209.97.154.37/data/v1/user/update/lll`,
+      `http://209.97.154.37/data/v1/user/update/${flowID}`,
       {
         method: "PUT",
         body: JSON.stringify({ name, heading, el: flowEl }),
@@ -104,6 +105,7 @@ const FlowBuilder = () => {
       setDisplayEl(formList);
     };
     getFormElements(`http://209.97.154.37/data/v1/form-flow/${e.target.id}`);
+    setFlowId(e.target.id);
   };
 
   const handleRemoveButton = (e) => {

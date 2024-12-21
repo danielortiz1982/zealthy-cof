@@ -77,7 +77,7 @@ const FlowBuilder = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const response = await fetch(
-      `http://209.97.154.37/data/v1/user/update/${flowId}`,
+      `http://209.97.154.37/data/v1/form-flow/update/${flowId}`,
       {
         method: "PUT",
         body: JSON.stringify({ name, heading, el: flowEl }),
@@ -85,6 +85,8 @@ const FlowBuilder = () => {
       }
     );
     const data = await response.json();
+
+    console.log(data);
 
     setName("");
     setHeading("");
